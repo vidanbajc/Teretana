@@ -1,5 +1,8 @@
 package Klase;
 
+import Exception.NeispravanDatumPocetkaException;
+import Exception.NeispravnaVrednostException;
+import Exception.PraznoPoljeException;
 import Interface.Placanje;
 import java.time.LocalDate;
 
@@ -9,11 +12,21 @@ public class Clanarina implements Placanje{
     private int broj_aktivnih_meseci;
     private LocalDate datum_pocetka;
 
-    public Clanarina(String tip, double cena, int broj_aktivnih_meseci, LocalDate datum_pocetka) {
-        // exception ako je tip null ili empty
-        // exception ako je cena <= 0
-        // exception ako je broj_aktivnih_meseci <= 0
-        // exception ako je datum_pocetka null ili nije danasnji datum
+    public Clanarina(String tip, double cena, int broj_aktivnih_meseci, LocalDate datum_pocetka) 
+            throws PraznoPoljeException, NeispravnaVrednostException, NeispravanDatumPocetkaException{
+        
+        if(tip == null || tip.trim().isEmpty())
+            throw new PraznoPoljeException("Tip placanja koji ste uneli nije validan!");
+
+        if(cena <= 0)
+            throw new NeispravnaVrednostException("Cena koju ste uneli nije validna (mora biti veca od nule)!");
+
+        if(broj_aktivnih_meseci <= 0)
+            throw new NeispravnaVrednostException("Broj aktivnih meseci koji ste uneli nije validan (mora biti veci od nule)!");
+
+        if(datum_pocetka == null || !datum_pocetka.equals(LocalDate.now()))
+            throw new NeispravanDatumPocetkaException("Datum pocetka koji ste uneli nije validan (mora biti danasnji datum)!");
+
         this.tip = tip;
         this.cena = cena;
         this.broj_aktivnih_meseci = broj_aktivnih_meseci;
@@ -24,8 +37,10 @@ public class Clanarina implements Placanje{
         return tip;
     }
 
-    public void setTip(String tip) {
-        // exception ako je tip null ili empty
+    public void setTip(String tip) throws PraznoPoljeException{
+        if(tip == null || tip.trim().isEmpty())
+            throw new PraznoPoljeException("Tip placanja koji ste uneli nije validan!");
+
         this.tip = tip;
     }
 
@@ -33,8 +48,10 @@ public class Clanarina implements Placanje{
         return cena;
     }
 
-    public void setCena(double cena) {
-        // exception ako je cena <= 0
+    public void setCena(double cena) throws NeispravnaVrednostException{
+        if(cena <= 0)
+            throw new NeispravnaVrednostException("Cena koju ste uneli nije validna (mora biti veca od nule)!");
+
         this.cena = cena;
     }
 
@@ -42,8 +59,10 @@ public class Clanarina implements Placanje{
         return broj_aktivnih_meseci;
     }
 
-    public void setBroj_aktivnih_meseci(int broj_aktivnih_meseci) {
-        // exception ako je broj_aktivnih_meseci <= 0
+    public void setBroj_aktivnih_meseci(int broj_aktivnih_meseci) throws NeispravnaVrednostException{
+        if(broj_aktivnih_meseci <= 0)
+            throw new NeispravnaVrednostException("Broj aktivnih meseci koji ste uneli nije validan (mora biti veci od nule)!");
+
         this.broj_aktivnih_meseci = broj_aktivnih_meseci;
     }
 
@@ -51,8 +70,10 @@ public class Clanarina implements Placanje{
         return datum_pocetka;
     }
 
-    public void setDatum_pocetka(LocalDate datum_pocetka) {
-        // exception ako je datum_pocetka null ili nije danasnji datum
+    public void setDatum_pocetka(LocalDate datum_pocetka) throws NeispravanDatumPocetkaException{
+        if(datum_pocetka == null || !datum_pocetka.equals(LocalDate.now()))
+            throw new NeispravanDatumPocetkaException("Datum pocetka koji ste uneli nije validan (mora biti danasnji datum)!");
+
         this.datum_pocetka = datum_pocetka;
     }
 

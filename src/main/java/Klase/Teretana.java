@@ -1,48 +1,59 @@
 package Klase;
 
+import Exception.NeispravnaVrednostException;
+import Exception.OsobaNijePronadjenaException;
+import Exception.OsobaVecPostojiException;
 import java.util.ArrayList;
 
 public class Teretana {
-    private ArrayList<Clan> clanovi;
-    private ArrayList<Radnik> radnici;
+    private final ArrayList<Clan> clanovi;
+    private final ArrayList<Radnik> radnici;
 
     public Teretana() {
-        this.clanovi = new ArrayList<Clan>();
-        this.radnici = new ArrayList<Radnik>();
+        this.clanovi = new ArrayList<>();
+        this.radnici = new ArrayList<>();
     }
     
-    public void DodajClana(Clan clan)
+    public void DodajClana(Clan clan) throws OsobaVecPostojiException
     {
-        // exception ako pokusamo da dodamo istog clana, isti broj_clana
+        for(Clan c : clanovi)
+            if(c.getBroj_clana() == clan.getBroj_clana())
+                throw new OsobaVecPostojiException("Clan sa ovim brojem clana vec postoji!");
+        
         clanovi.add(clan);
     }
     
-    public void DodajRadnika(Radnik radnik)
+    public void DodajRadnika(Radnik radnik) throws OsobaVecPostojiException
     {
-        // exception ako pokusamo da dodamo istog radnika/menadzera, isti broj_radnika
+        for(Radnik r : radnici)
+            if(r.getBroj_radnika() == radnik.getBroj_radnika())
+                throw new OsobaVecPostojiException("Radnik sa ovim brojem radnika vec postoji!");
+        
         radnici.add(radnik);
     }
     
-    public Clan PronadjiClana(int broj_clana)
+    public Clan PronadjiClana(int broj_clana) throws NeispravnaVrednostException, OsobaNijePronadjenaException
     {
-        // exception ako je broj_clana <= 0
+        if(broj_clana <= 0)
+            throw new NeispravnaVrednostException("Broj radnika koji ste uneli nije validan (mora biti veci od nule)!");
         
         for(Clan c : clanovi)
             if(c.getBroj_clana() == broj_clana)
                 return c;
         
-        return null;
+        throw new OsobaNijePronadjenaException(String.format("Clan sa brojem clana %d nije pronadjen", broj_clana));
     }
     
-    public Radnik PronadjiRadnika(int broj_radnika)
+    public Radnik PronadjiRadnika(int broj_radnika) throws NeispravnaVrednostException, OsobaNijePronadjenaException
     {
-        // exception ako je broj_radnika <= 0
+        if(broj_radnika <= 0)
+            throw new NeispravnaVrednostException("Broj radnika koji ste uneli nije validan (mora biti veci od nule)!");
         
         for(Radnik r : radnici)
             if(r.getBroj_radnika() == broj_radnika)
                 return r;
         
-        return null;
+        throw new OsobaNijePronadjenaException(String.format("Radnik sa brojem radnika %d nije pronadjen", broj_radnika));
     }
     
     public static double ProsecnaPlata(ArrayList<Radnik> radnici)

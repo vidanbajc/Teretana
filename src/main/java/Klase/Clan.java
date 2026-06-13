@@ -1,25 +1,24 @@
 package Klase;
 
+import Exception.NeispravnaVrednostException;
+import Exception.PraznoPoljeException;
+
 public class Clan extends Osoba{
-    private int broj_clana;
+    private final int broj_clana;
     private Clanarina clanarina;
 
-    public Clan(int broj_clana, String ime, String prezime, Clanarina clanarina) {
-        // exception ako je broj_clana <= 0
-        // u klasi teretana u metodi DodajClana exception ako clan sa broj_clana vec postoji
+    public Clan(int broj_clana, String ime, String prezime, Clanarina clanarina) throws PraznoPoljeException, NeispravnaVrednostException{
         super(ime, prezime);
+        
+        if(broj_clana <= 0)
+            throw new NeispravnaVrednostException("Broj clana koji ste uneli nije validan (mora biti veci od nule)!");
+
         this.broj_clana = broj_clana;
         this.clanarina = clanarina;
     }
 
     public int getBroj_clana() {
         return broj_clana;
-    }
-
-    public void setBroj_clana(int broj_clana) {
-        // exception ako je broj_clana <= 0
-        // u klasi teretana u metodi DodajClana exception ako clan sa broj_clana vec postoji
-        this.broj_clana = broj_clana;
     }
 
     public Clanarina getClanarina() {

@@ -1,17 +1,19 @@
 package Klase;
 
+import Exception.PraznoPoljeException;
+
 public abstract class Osoba {
     private String ime;
     private String prezime;
-    
-    public Osoba() {
-        this.ime = "";
-        this.prezime = "";
-    }
 
-    public Osoba(String ime, String prezime) {
-        // exception ako je ime null ili empty
-        // exception ako je prezime null ili empty
+    public Osoba(String ime, String prezime) throws PraznoPoljeException{
+        
+        if(ime == null || ime.trim().isEmpty())
+            throw new PraznoPoljeException("Ime koje ste uneli nije validno!");
+
+        if(prezime == null || prezime.trim().isEmpty())
+            throw new PraznoPoljeException("Prezme koje ste uneli nije validno!");
+
         this.ime = ime;
         this.prezime = prezime;
     }
@@ -20,8 +22,11 @@ public abstract class Osoba {
         return ime;
     }
 
-    public void setIme(String ime) {
-        // exception ako je ime null ili empty
+    public void setIme(String ime) throws PraznoPoljeException{
+        
+        if(ime == null || ime.trim().isEmpty())
+            throw new PraznoPoljeException("Ime koje ste uneli nije validno!");
+
         this.ime = ime;
     }
 
@@ -29,8 +34,11 @@ public abstract class Osoba {
         return prezime;
     }
 
-    public void setPrezime(String prezime) {
-        // exception ako je prezime null ili empty
+    public void setPrezime(String prezime) throws PraznoPoljeException{
+        
+        if(prezime == null || prezime.trim().isEmpty())
+            throw new PraznoPoljeException("Prezime koje ste uneli nije validno!");
+
         this.prezime = prezime;
     }
 
@@ -38,6 +46,4 @@ public abstract class Osoba {
     public String toString() {
         return String.format("Osoba:%nIme: %s%nPrezime: %s%n", ime, prezime);
     }
-    
-    
 }
