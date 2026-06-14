@@ -6,6 +6,15 @@ import Exception.PraznoPoljeException;
 public class Menadzer extends Radnik{
     private int broj_zaposlenih;
     
+    public Menadzer(String ime, String prezime, double plata, String pozicija, int broj_zaposlenih) throws PraznoPoljeException, NeispravnaVrednostException{
+        super(ime, prezime, plata, pozicija);
+        
+        if(broj_zaposlenih < 0) // moze da ima 0 podredjenih
+            throw new NeispravnaVrednostException("Broj zaposlenih koji ste uneli nije validan (mora biti pozitivan)!");
+
+        this.broj_zaposlenih = broj_zaposlenih;
+    }
+    
     public Menadzer(int broj_radnika, String ime, String prezime, double plata, String pozicija, int broj_zaposlenih) throws PraznoPoljeException, NeispravnaVrednostException{
         super(broj_radnika, ime, prezime, plata, pozicija);
         
@@ -13,7 +22,6 @@ public class Menadzer extends Radnik{
             throw new NeispravnaVrednostException("Broj zaposlenih koji ste uneli nije validan (mora biti pozitivan)!");
 
         this.broj_zaposlenih = broj_zaposlenih;
-        
     }
 
     public int getBroj_zaposlenih() {

@@ -3,6 +3,7 @@ package Utils;
 import Klase.Clan;
 import Klase.Clanarina;
 import Klase.Radnik;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import org.json.simple.parser.JSONParser;
 
 public class JSONUtils {
     
-    public static void SacuvajClana(ArrayList<Clan> clanovi)
+    public static void SacuvajClanove(ArrayList<Clan> clanovi)
     {
         JSONArray json_niz = new JSONArray();
         
@@ -29,14 +30,14 @@ public class JSONUtils {
             objj.put("tip", c.getClanarina().getTip());
             objj.put("cena", c.getClanarina().getCena());
             objj.put("broj_aktivnih_meseci", c.getClanarina().getBroj_aktivnih_meseci());
-            objj.put("datum_pocetka", c.getClanarina().getDatum_pocetka());
+            objj.put("datum_pocetka", c.getClanarina().getDatum_pocetka().toString());
             
             obj.put("clanarina", objj);
             
             json_niz.add(obj);
         }
         
-        try(FileWriter fw = new FileWriter("clanovi.json")) {
+        try(FileWriter fw = new FileWriter("src/main/artifacts/clanovi.json")) {
             fw.write(json_niz.toJSONString());
         }
         catch(IOException e){
@@ -44,7 +45,7 @@ public class JSONUtils {
         }
     }
     
-    public static void SacuvajRadnika(ArrayList<Radnik> radnici)
+    public static void SacuvajRadnike(ArrayList<Radnik> radnici)
     {
         JSONArray json_niz = new JSONArray();
         
@@ -60,7 +61,7 @@ public class JSONUtils {
             json_niz.add(obj);
         }
         
-        try(FileWriter fw = new FileWriter("radnici.json")) {
+        try(FileWriter fw = new FileWriter("src/main/artifacts/radnici.json")) {
             fw.write(json_niz.toJSONString());
         }
         catch(IOException e){
@@ -72,7 +73,12 @@ public class JSONUtils {
     {
         ArrayList<Clan> clanovi = new ArrayList<>();
         
-        try(FileReader fr = new FileReader("clanovi.json")){
+        File file = new File("src/main/artifacts/clanovi.json");
+        
+        if(!file.exists())
+            return clanovi;
+            
+        try(FileReader fr = new FileReader(file)){
             JSONParser parser = new JSONParser();
             JSONArray json_niz = (JSONArray) parser.parse(fr);
             
@@ -96,7 +102,7 @@ public class JSONUtils {
             }
         }
         catch(Exception e){
-            System.out.println("Greska pri ucitavanju: " + e.getMessage());
+            System.err.println("Greska pri ucitavanju: " + e.getMessage());
         }
         
         return clanovi;
@@ -106,7 +112,12 @@ public class JSONUtils {
     {
         ArrayList<Radnik> radnici = new ArrayList<>();
         
-        try(FileReader fr = new FileReader("radnici.json")){
+        File file = new File("src/main/artifacts/radnici.json");
+        
+        if(!file.exists())
+            return radnici;
+        
+        try(FileReader fr = new FileReader(file)){
             JSONParser parser = new JSONParser();
             JSONArray json_niz = (JSONArray) parser.parse(fr);
             
@@ -124,7 +135,7 @@ public class JSONUtils {
             }
         }
         catch(Exception e){
-            System.out.println("Greska pri ucitavanju: " + e.getMessage());
+            System.err.println("Greska pri ucitavanju: " + e.getMessage());
         }
         
         return radnici;

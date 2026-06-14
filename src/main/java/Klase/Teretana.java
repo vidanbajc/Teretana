@@ -13,6 +13,14 @@ public class Teretana {
         this.clanovi = new ArrayList<>();
         this.radnici = new ArrayList<>();
     }
+
+    public ArrayList<Clan> getClanovi() {
+        return clanovi;
+    }
+
+    public ArrayList<Radnik> getRadnici() {
+        return radnici;
+    }
     
     public void DodajClana(Clan clan) throws OsobaVecPostojiException
     {
@@ -58,7 +66,7 @@ public class Teretana {
     
     public static double ProsecnaPlata(ArrayList<Radnik> radnici)
     {
-        if(radnici.isEmpty())
+        if(radnici == null || radnici.isEmpty())
             return 0;
         
         double suma = 0;
